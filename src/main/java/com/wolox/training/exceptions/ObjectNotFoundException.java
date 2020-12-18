@@ -9,7 +9,7 @@ public class ObjectNotFoundException extends RuntimeException {
 
     private String objectName;
 
-    public ObjectNotFoundException(String objectName){
+    public ObjectNotFoundException(String objectName) {
         this.objectName = objectName;
     }
 

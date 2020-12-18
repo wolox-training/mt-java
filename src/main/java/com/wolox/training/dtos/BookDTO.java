@@ -3,7 +3,7 @@ package com.wolox.training.dtos;
 import lombok.Data;
 
 @Data
-public class BookDto {
+public class BookDTO {
 
     private String genre;
     private String author;

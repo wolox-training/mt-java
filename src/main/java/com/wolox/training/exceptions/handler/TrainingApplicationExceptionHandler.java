@@ -16,7 +16,8 @@ public class TrainingApplicationExceptionHandler {
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @ResponseBody
     public GenericError objectNotFound(ObjectNotFoundException ex) {
-        String message = new StringBuilder(ex.getObjectName()).append(" ").append(NOT_FOUND).toString();
+        String message = new StringBuilder(ex.getObjectName()).append(" ").append(NOT_FOUND)
+                .toString();
         return new GenericError("001", message);
     }
 

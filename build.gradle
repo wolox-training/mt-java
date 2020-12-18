@@ -22,6 +22,7 @@ dependencies {
 	testCompileOnly 'org.projectlombok:lombok:1.18.16'
 	testAnnotationProcessor 'org.projectlombok:lombok:1.18.16'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	compile group: 'org.hibernate', name: 'hibernate-validator', version: '6.1.0.Final'
 }
 
 test {

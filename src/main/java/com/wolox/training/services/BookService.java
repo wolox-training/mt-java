@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class BookService {
 
+    private static final String BOOK = "book";
+
     @Autowired
     private BookRepository bookRepository;
 
@@ -26,7 +28,7 @@ public class BookService {
     }
 
     public Book findOne(Long id) {
-        return bookRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Book"));
+        return bookRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(BOOK));
     }
 
     @Transactional
@@ -39,14 +41,14 @@ public class BookService {
     @Transactional
     public void delete(Long id) {
         bookRepository.findById(id)
-                .orElseThrow(() -> new ObjectNotFoundException("Book"));
+                .orElseThrow(() -> new ObjectNotFoundException(BOOK));
         bookRepository.deleteById(id);
     }
 
     @Transactional
     public Book updateBook(BookDTO bookDto, Long id) {
         Book book = bookRepository.findById(id)
-                .orElseThrow(() -> new ObjectNotFoundException("Book"));
+                .orElseThrow(() -> new ObjectNotFoundException(BOOK));
 
         adaptBookDtoToBookModel(bookDto, book);
 

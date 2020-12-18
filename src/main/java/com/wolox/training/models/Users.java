@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -28,8 +28,7 @@ public class Users {
     @NotNull
     private LocalDate birthdate;
 
-    @NotNull
-    @OneToMany(mappedBy = "users")
+    @ManyToMany(mappedBy = "users")
     private List<Book> books = new ArrayList<>();
 
     public Users() {

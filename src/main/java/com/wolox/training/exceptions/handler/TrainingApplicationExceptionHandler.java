@@ -15,7 +15,8 @@ public class TrainingApplicationExceptionHandler {
     @ResponseBody
     public GenericError objectNotFound(ObjectNotFoundException ex) {
         ErrorsEnum error = ErrorsEnum.OBJECT_NOT_FOUND;
-        String message = new StringBuilder(ex.getObjectName()).append(" ").append(error.getMessage())
+        String message = new StringBuilder(ex.getObjectName()).append(" ")
+                .append(error.getMessage())
                 .toString();
         return new GenericError(error.getCode(), message);
     }

@@ -5,7 +5,6 @@ import com.wolox.training.exceptions.ObjectNotFoundException;
 import com.wolox.training.models.Book;
 import com.wolox.training.repositories.BookRepository;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,8 +22,9 @@ public class BookService {
         return bookRepository.findAll();
     }
 
-    public Optional<Book> findByAuthor(String bookAuthor) {
-        return bookRepository.findByAuthor(bookAuthor);
+    public Book findByAuthor(String bookAuthor) {
+        return bookRepository.findByAuthor(bookAuthor)
+                .orElseThrow(() -> new ObjectNotFoundException(BOOK));
     }
 
     public Book findOne(Long id) {

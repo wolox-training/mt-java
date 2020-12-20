@@ -1,5 +1,7 @@
 package com.wolox.training.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -52,11 +54,8 @@ public class Book {
     @Column(nullable = false, unique = true)
     private String isbn;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "books_users",
-            joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id",
-                    referencedColumnName = "id"))
+    @ManyToMany(mappedBy = "books", cascade = CascadeType.ALL)
+    @JsonBackReference
     private List<Users> users = new ArrayList<>();
 
     @Override

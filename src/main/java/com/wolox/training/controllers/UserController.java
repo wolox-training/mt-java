@@ -87,7 +87,7 @@ public class UserController {
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")})
     public ResponseEntity<Users> add(@PathVariable Long userId, @RequestParam Long bookId) {
         Users user = userService.addBookToAUser(userId, bookId);
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PostMapping("/{id}/remove")
@@ -96,7 +96,7 @@ public class UserController {
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")})
     public ResponseEntity<Users> create(@PathVariable Long userId, @RequestParam Long bookId) {
         Users user = userService.removeBookToAUser(userId, bookId);
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
 }

@@ -7,10 +7,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -39,8 +42,11 @@ public class Users {
     @ApiModelProperty(notes = "The user's birthdate")
     private LocalDate birthdate;
 
-    @ManyToMany(mappedBy = "users")
-    @ApiModelProperty(notes = "The user's book list")
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "books_users",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id",
+                    referencedColumnName = "id"))
     private List<Book> books = new ArrayList<>();
 
     public List<Book> getBooks() {

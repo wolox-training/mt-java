@@ -40,20 +40,20 @@ public class Users {
         return (List<Book>) Collections.unmodifiableList(books);
     }
 
-    public boolean addBook(Book book){
-        if (books.contains(book)){
+    public boolean addBook(Book book) {
+        if (books.contains(book)) {
             throw new BookAlreadyOwnedException();
         }
 
         return books.add(book);
     }
 
-    public boolean removeBook(Book book){
-       if(books.contains(book)){
-           return books.remove(book);
-       }
+    public boolean removeBook(Book book) {
+        if (books.contains(book)) {
+            return books.remove(book);
+        }
 
-       return false;
+        return false;
     }
 
 }

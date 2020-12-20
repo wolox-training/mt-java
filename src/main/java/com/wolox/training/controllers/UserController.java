@@ -81,4 +81,16 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
+    @PostMapping("/{id}/add")
+    public ResponseEntity<Users> add(@PathVariable Long userId, @RequestParam Long bookId) {
+        Users user = userService.addBookToAUser(userId, bookId);
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/{id}/remove")
+    public ResponseEntity<Users> create(@PathVariable Long userId, @RequestParam Long bookId) {
+        Users user = userService.removeBookToAUser(userId, bookId);
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
+    }
+
 }

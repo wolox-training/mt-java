@@ -98,14 +98,14 @@ public class UserService {
     /**
      * This method adds a {@link Book} to an {@link Users}
      *
-     * @param idUser: user's id
-     * @param book:   Book to add to an User
+     * @param userId: user's id
+     * @param bookId:   id of the Book to add to an User
      * @return the {@link Users} updated
      */
     @Transactional
-    public Users addBookToAnUser(Long idUser, Long idBook) {
-        Users user = this.findOne(idUser);
-        Book book = bookService.findOne(idBook);
+    public Users addBookToAUser(Long userId, Long bookId) {
+        Users user = this.findOne(userId);
+        Book book = bookService.findOne(bookId);
         user.addBook(book);
         return userRepository.save(user);
     }
@@ -113,14 +113,14 @@ public class UserService {
     /**
      * This method removes a {@link Book} from a {@link Users}
      *
-     * @param idUser: user's id
-     * @param book:   Book to add to an User
+     * @param userId: user's id
+     * @param bookId:   id of the Book to remove to an User
      * @return the {@link Users} updated
      */
     @Transactional
-    public Users removeBookToAnUser(Long idUser, Long idBook) {
-        Users user = this.findOne(idUser);
-        Book book = bookService.findOne(idBook);
+    public Users removeBookToAUser(Long userId, Long bookId) {
+        Users user = this.findOne(userId);
+        Book book = bookService.findOne(bookId);
         user.removeBook(book);
         return userRepository.save(user);
     }

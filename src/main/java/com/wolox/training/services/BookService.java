@@ -28,7 +28,7 @@ public class BookService {
     }
 
     /**
-     * This method returns a {@link Book} wrote by an specific Author
+     * This method returns a {@link Book} wrote by a specific Author
      *
      * @param bookAuthor: name of the book's author
      * @return a {@link Book} wrote by a bookAuthor

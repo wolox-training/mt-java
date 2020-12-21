@@ -32,7 +32,7 @@ public class UserController {
     @GetMapping
     @ApiOperation(value = "List all users", response = Users.class)
     @ApiResponses(value = @ApiResponse(code = 200, message = "Successfully users retrieves"))
-    public ResponseEntity<List<Users>> findAll() {
+    public ResponseEntity<List<Users>> findAllUsers() {
         List<Users> users = userService.findAll();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
@@ -50,7 +50,7 @@ public class UserController {
     @ApiOperation(value = "Giving an id, return the user", response = Users.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully user retrieve"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")})
-    public ResponseEntity<Users> findOne(@PathVariable Long id) {
+    public ResponseEntity<Users> findOneUser(@PathVariable Long id) {
         Users user = userService.findOne(id);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
@@ -58,7 +58,7 @@ public class UserController {
     @PostMapping
     @ApiOperation(value = "Creates a user and then returns it", response = Users.class)
     @ApiResponses(value = @ApiResponse(code = 201, message = "User created successfully"))
-    public ResponseEntity<Users> create(@RequestBody UserDTO userDto) {
+    public ResponseEntity<Users> createUser(@RequestBody UserDTO userDto) {
         Users user = userService.create(userDto);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
@@ -67,7 +67,7 @@ public class UserController {
     @ApiOperation(value = "Giving an id, deletes the user")
     @ApiResponses(value = {@ApiResponse(code = 204, message = "User deleted successfully"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")})
-    public ResponseEntity delete(@PathVariable Long id) {
+    public ResponseEntity deleteUser(@PathVariable Long id) {
         userService.delete(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }

@@ -1,7 +1,8 @@
 package com.wolox.training.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.google.common.base.Preconditions;
+import com.wolox.training.commons.Constants;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -57,6 +58,46 @@ public class Book {
     @ManyToMany(mappedBy = "books", cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Users> users = new ArrayList<>();
+
+    public void setAuthor(String author) {
+        String message = String.format(Constants.CHECK_NULL_MESSAGE, "author");
+        this.author = Preconditions.checkNotNull(author, message);
+    }
+
+    public void setImage(String image) {
+        String message = String.format(Constants.CHECK_NULL_MESSAGE, "image");
+        this.image = Preconditions.checkNotNull(image, message);
+    }
+
+    public void setTitle(String title) {
+        String message = String.format(Constants.CHECK_NULL_MESSAGE, "title");
+        this.title = Preconditions.checkNotNull(title, message);
+    }
+
+    public void setSubtitle(String subtitle) {
+        String message = String.format(Constants.CHECK_NULL_MESSAGE, "subtitle");
+        this.subtitle = Preconditions.checkNotNull(subtitle, message);
+    }
+
+    public void setPublisher(String publisher) {
+        String message = String.format(Constants.CHECK_NULL_MESSAGE, "publisher");
+        this.publisher = Preconditions.checkNotNull(publisher, message);
+    }
+
+    public void setYear(String year) {
+        String message = String.format(Constants.CHECK_NULL_MESSAGE, "year");
+        this.year = Preconditions.checkNotNull(year, message);
+    }
+
+    public void setPages(Integer pages) {
+        String message = String.format(Constants.CHECK_NULL_MESSAGE, "pages");
+        this.pages = Preconditions.checkNotNull(pages, message);
+    }
+
+    public void setIsbn(String isbn) {
+        String message = String.format(Constants.CHECK_NULL_MESSAGE, "isbn");
+        this.isbn = Preconditions.checkNotNull(isbn, message);
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -7,6 +7,7 @@ import com.wolox.training.models.Users;
 import com.wolox.training.repositories.UserRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,9 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     /**
      * This method returns a list of {@link Users}
@@ -129,5 +133,6 @@ public class UserService {
         user.setUsername(userDTO.getUsername());
         user.setBirthdate(userDTO.getBirthdate());
         user.setName(userDTO.getName());
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
     }
 }

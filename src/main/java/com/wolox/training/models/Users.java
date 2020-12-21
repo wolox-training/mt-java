@@ -37,6 +37,10 @@ public class Users {
     private String username;
 
     @NotNull
+    @ApiModelProperty(notes = "The user's password")
+    private String password;
+
+    @NotNull
     @ApiModelProperty(notes = "The user's name")
     private String name;
 
@@ -58,6 +62,11 @@ public class Users {
     public void setUsername(String username) {
         String message = String.format(Constants.CHECK_NULL_MESSAGE, "username");
         this.username = Preconditions.checkNotNull(username, message);
+    }
+
+    public void setPassword(String password) {
+        String message = String.format(Constants.CHECK_NULL_MESSAGE, "password");
+        this.password = Preconditions.checkNotNull(password, message);
     }
 
     public void setName(String name) {

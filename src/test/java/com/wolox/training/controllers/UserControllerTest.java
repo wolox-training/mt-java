@@ -34,6 +34,7 @@ public class UserControllerTest {
     public void setUp() {
         oneTestUser = new Users();
         oneTestUser.setUsername("torsello");
+        oneTestUser.setPassword("123456");
         oneTestUser.setName("Matias Torsello");
         oneTestUser.setBirthdate(LocalDate.of(1995,10,11));
     }
@@ -48,6 +49,7 @@ public class UserControllerTest {
                 .andExpect(MockMvcResultMatchers.content().json("{\n"
                         + "    \"id\": 0,\n"
                         + "    \"username\": \"torsello\",\n"
+                        + "    \"password\": \"123456\",\n"
                         + "    \"name\": \"Matias Torsello\",\n"
                         + "    \"birthdate\": \"1995-10-11\",\n"
                         + "    \"books\": []\n"

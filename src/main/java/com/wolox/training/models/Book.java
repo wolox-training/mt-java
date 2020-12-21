@@ -12,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -48,12 +47,8 @@ public class Book {
     @Column(nullable = false, unique = true)
     private String isbn;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "books_users",
-            joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id",
-                    referencedColumnName = "id"))
-    private List<Users> users = new ArrayList<>();
+    @ManyToMany(cascade = {CascadeType.REFRESH, CascadeType.MERGE})
+    private List<User> users = new ArrayList<>();
 
     public Book() {
 
@@ -135,11 +130,11 @@ public class Book {
         this.isbn = isbn;
     }
 
-    public List<Users> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
-    public void setUsers(List<Users> users) {
+    public void setUsers(List<User> users) {
         this.users = users;
     }
 

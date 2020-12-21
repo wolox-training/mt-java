@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ControllerAdvice
 public class TrainingApplicationExceptionHandler {
 
-    private static final String NOT_FOUND = "not found";
-
     @ExceptionHandler({ObjectNotFoundException.class})
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @ResponseBody
     public GenericError objectNotFound(ObjectNotFoundException ex) {
-        String message = new StringBuilder(ex.getObjectName()).append(" ").append(NOT_FOUND)
+        ErrorsEnum error = ErrorsEnum.OBJECT_NOT_FOUND;
+        String message = new StringBuilder(ex.getObjectName()).append(" ")
+                .append(error.getMessage())
                 .toString();
-        return new GenericError("001", message);
+        return new GenericError(error.getCode(), message);
     }
 
 }

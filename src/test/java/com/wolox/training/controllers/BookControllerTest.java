@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -45,6 +46,7 @@ public class BookControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void whenFindByIdWhichExists_thenBookIsReturned() throws Exception {
         Mockito.when(mockService.findOne(1L)).thenReturn(oneTestBook);
         String url = "/api/books/1";
@@ -99,6 +101,12 @@ public class BookControllerTest {
         dto.setYear("1986");
         mockService.create(dto);
         Mockito.when(mockService.create(dto)).thenThrow(DataIntegrityViolationException.class);
+    }
+
+    @Test
+    public void testingGetAllBooks_WithoutAuth() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/api/books/").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isUnauthorized());
     }
 
 }

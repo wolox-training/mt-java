@@ -30,7 +30,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    @ApiOperation(value = "List all users", response = Users.class)
+    @ApiOperation(value = "List all users", response = User.class)
     @ApiResponses(value = @ApiResponse(code = 200, message = "Successfully users retrieves"))
     public ResponseEntity<List<User>> findAll() {
         List<User> users = userService.findAll();
@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @GetMapping("/username")
-    @ApiOperation(value = "Giving a username, return the user", response = Users.class)
+    @ApiOperation(value = "Giving a username, return the user", response = User.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully user retrieve"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")})
     public ResponseEntity<User> findByUsername(@RequestParam(name = "username") String username) {
@@ -47,7 +47,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "Giving an id, return the user", response = Users.class)
+    @ApiOperation(value = "Giving an id, return the user", response = User.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully user retrieve"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")})
     public ResponseEntity<User> findOne(@PathVariable Long id) {
@@ -56,7 +56,7 @@ public class UserController {
     }
 
     @PostMapping
-    @ApiOperation(value = "Creates a user and then returns it", response = Users.class)
+    @ApiOperation(value = "Creates a user and then returns it", response = User.class)
     @ApiResponses(value = @ApiResponse(code = 201, message = "User created successfully"))
     public ResponseEntity<User> create(@RequestBody UserDTO userDto) {
         User user = userService.create(userDto);
@@ -73,7 +73,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    @ApiOperation(value = "Giving an id, updates the user", response = Users.class)
+    @ApiOperation(value = "Giving an id, updates the user", response = User.class)
     @ApiResponses(value = {@ApiResponse(code = 204, message = "User updated successfully"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")})
     public ResponseEntity<User> updateUser(@RequestBody UserDTO userDto, @PathVariable Long id) {
@@ -82,7 +82,7 @@ public class UserController {
     }
 
     @PostMapping("/{id}/add")
-    @ApiOperation(value = "Giving a userId and bookId, return the user with the book added", response = Users.class)
+    @ApiOperation(value = "Giving a userId and bookId, return the user with the book added", response = User.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully user retrieve"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")})
     public ResponseEntity<User> add(@PathVariable(name = "id") Long userId,
@@ -92,7 +92,7 @@ public class UserController {
     }
 
     @PostMapping("/{id}/remove")
-    @ApiOperation(value = "Giving a userId and bookId, return the user with the book removed", response = Users.class)
+    @ApiOperation(value = "Giving a userId and bookId, return the user with the book removed", response = User.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully user retrieve"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")})
     public ResponseEntity<User> create(@PathVariable(name = "id") Long userId,

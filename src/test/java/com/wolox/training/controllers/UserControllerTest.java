@@ -2,7 +2,7 @@ package com.wolox.training.controllers;
 
 import com.wolox.training.dtos.UserDTO;
 import com.wolox.training.exceptions.ObjectNotFoundException;
-import com.wolox.training.models.Users;
+import com.wolox.training.models.User;
 import com.wolox.training.services.UserService;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -28,11 +29,11 @@ public class UserControllerTest {
     @MockBean
     private UserService mockService;
 
-    private Users oneTestUser;
+    private User oneTestUser;
 
     @BeforeEach
     public void setUp() {
-        oneTestUser = new Users();
+        oneTestUser = new User();
         oneTestUser.setUsername("torsello");
         oneTestUser.setPassword("123456");
         oneTestUser.setName("Matias Torsello");
@@ -40,6 +41,7 @@ public class UserControllerTest {
     }
 
     @Test
+    @WithMockUser
     public void whenFindByIdWhichExists_thenUserIsReturned() throws Exception {
         Mockito.when(mockService.findOne(1L)).thenReturn(oneTestUser);
         String url = "/api/users/1";
@@ -49,7 +51,6 @@ public class UserControllerTest {
                 .andExpect(MockMvcResultMatchers.content().json("{\n"
                         + "    \"id\": 0,\n"
                         + "    \"username\": \"torsello\",\n"
-                        + "    \"password\": \"123456\",\n"
                         + "    \"name\": \"Matias Torsello\",\n"
                         + "    \"birthdate\": \"1995-10-11\",\n"
                         + "    \"books\": []\n"
@@ -68,6 +69,12 @@ public class UserControllerTest {
     @Test
     public void whenFindByIdWhichNoExists() throws Exception {
         Mockito.when(mockService.findOne(1L)).thenThrow(ObjectNotFoundException.class);
+    }
+
+    @Test
+    public void testingGetAllUsers_WithoutAuth() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/api/users/").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isUnauthorized());
     }
 
 }

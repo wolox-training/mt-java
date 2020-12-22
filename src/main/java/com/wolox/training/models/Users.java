@@ -1,5 +1,6 @@
 package com.wolox.training.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.Preconditions;
 import com.wolox.training.commons.Constants;
 import com.wolox.training.exceptions.BookAlreadyOwnedException;
@@ -37,6 +38,7 @@ public class Users {
     private String username;
 
     @NotNull
+    @JsonIgnore
     @ApiModelProperty(notes = "The user's password")
     private String password;
 

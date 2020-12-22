@@ -54,7 +54,7 @@ public class Book {
     @Column(nullable = false, unique = true)
     private String isbn;
 
-    @ManyToMany(mappedBy = "books", cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     @JsonBackReference
     private List<Users> users = new ArrayList<>();
 

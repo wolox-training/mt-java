@@ -1,7 +1,7 @@
 package com.wolox.training.controllers;
 
 import com.wolox.training.dtos.UserDTO;
-import com.wolox.training.models.Users;
+import com.wolox.training.models.User;
 import com.wolox.training.services.UserService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,26 +25,26 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<Users>> findAll() {
-        List<Users> users = userService.findAll();
+    public ResponseEntity<List<User>> findAll() {
+        List<User> users = userService.findAll();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @GetMapping("/username")
-    public ResponseEntity<Users> findByUsername(@RequestParam(name = "username") String username) {
-        Users user = userService.findByUsername(username);
+    public ResponseEntity<User> findByUsername(@RequestParam(name = "username") String username) {
+        User user = userService.findByUsername(username);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Users> findOne(@PathVariable Long id) {
-        Users user = userService.findOne(id);
+    public ResponseEntity<User> findOne(@PathVariable Long id) {
+        User user = userService.findOne(id);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Users> create(@RequestBody UserDTO userDto) {
-        Users user = userService.create(userDto);
+    public ResponseEntity<User> create(@RequestBody UserDTO userDto) {
+        User user = userService.create(userDto);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
@@ -55,20 +55,20 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Users> updateUser(@RequestBody UserDTO userDto, @PathVariable Long id) {
-        Users user = userService.updateUser(userDto, id);
+    public ResponseEntity<User> updateUser(@RequestBody UserDTO userDto, @PathVariable Long id) {
+        User user = userService.updateUser(userDto, id);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PostMapping("/{id}/add")
-    public ResponseEntity<Users> add(@PathVariable(name = "id") Long userId, @RequestParam Long bookId) {
-        Users user = userService.addBookToAUser(userId, bookId);
+    public ResponseEntity<User> add(@PathVariable(name = "id") Long userId, @RequestParam Long bookId) {
+        User user = userService.addBookToAUser(userId, bookId);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PostMapping("/{id}/remove")
-    public ResponseEntity<Users> create(@PathVariable(name = "id") Long userId, @RequestParam Long bookId) {
-        Users user = userService.removeBookToAUser(userId, bookId);
+    public ResponseEntity<User> create(@PathVariable(name = "id") Long userId, @RequestParam Long bookId) {
+        User user = userService.removeBookToAUser(userId, bookId);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 

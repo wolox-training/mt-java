@@ -56,7 +56,7 @@ public class Book {
 
     @ManyToMany(cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     @JsonBackReference
-    private List<Users> users = new ArrayList<>();
+    private List<User> users = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {

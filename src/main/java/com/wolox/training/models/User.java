@@ -23,7 +23,7 @@ import lombok.Setter;
 
 @Entity
 @Data
-@ApiModel(description = "Users from the Wolox Training API")
+@ApiModel(description = "User from the Wolox Training API")
 @Table(name = "users")
 public class User {
 

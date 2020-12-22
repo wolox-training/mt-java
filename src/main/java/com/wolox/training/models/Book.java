@@ -55,7 +55,7 @@ public class Book {
 
     @ManyToMany(mappedBy = "books", cascade = CascadeType.ALL)
     @JsonBackReference
-    private List<Users> users = new ArrayList<>();
+    private List<User> users = new ArrayList<>();
 
     public void setAuthor(String author) {
         String message = String.format(Constants.CHECK_NULL_MESSAGE, "author");

@@ -3,7 +3,7 @@ package com.wolox.training.services;
 import com.wolox.training.dtos.UserDTO;
 import com.wolox.training.exceptions.ObjectNotFoundException;
 import com.wolox.training.models.Book;
-import com.wolox.training.models.Users;
+import com.wolox.training.models.User;
 import com.wolox.training.repositories.UserRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,51 +27,51 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     /**
-     * This method returns a list of {@link Users}
+     * This method returns a list of {@link User}
      *
-     * @return the list of {@link Users} persisted on db
+     * @return the list of {@link User} persisted on db
      */
-    public List<Users> findAll() {
+    public List<User> findAll() {
         return userRepository.findAll();
     }
 
     /**
-     * This method returns an {@link Users} with a specific Username
+     * This method returns an {@link User} with a specific Username
      *
      * @param username: user's username
-     * @return an {@link Users} with a specific username
+     * @return an {@link User} with a specific username
      */
-    public Users findByUsername(String username) {
+    public User findByUsername(String username) {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new ObjectNotFoundException(USERS));
     }
 
     /**
-     * This method returns an {@link Users} by id
+     * This method returns an {@link User} by id
      *
      * @param id: user's id
-     * @return a {@link Users} by id
+     * @return a {@link User} by id
      */
-    public Users findOne(Long id) {
+    public User findOne(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(USERS));
     }
 
 
     /**
-     * This method creates an {@link Users}
+     * This method creates an {@link User}
      *
-     * @param userDto: Data Transfer Object of {@link Users}
-     * @return the {@link Users} created
+     * @param userDto: Data Transfer Object of {@link User}
+     * @return the {@link User} created
      */
     @Transactional
-    public Users create(UserDTO userDto) {
-        Users user = new Users();
-        adaptUsersDTOToUsersModel(userDto, user);
+    public User create(UserDTO userDto) {
+        User user = new User();
+        adaptUserDTOToUserModel(userDto, user);
         return userRepository.save(user);
     }
 
     /**
-     * This method deletes an {@link Users}
+     * This method deletes an {@link User}
      *
      * @param id: user's id
      */
@@ -83,53 +83,53 @@ public class UserService {
     }
 
     /**
-     * This method updates a specific {@link Users}
+     * This method updates a specific {@link User}
      *
-     * @param userDto: Data Transfer Object of {@link Users} with the new values
+     * @param userDto: Data Transfer Object of {@link User} with the new values
      * @param id:      user's id
-     * @return the {@link Users} updated
+     * @return the {@link User} updated
      */
     @Transactional
-    public Users updateUser(UserDTO userDto, Long id) {
-        Users user = userRepository.findById(id)
+    public User updateUser(UserDTO userDto, Long id) {
+        User user = userRepository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException(USERS));
 
-        adaptUsersDTOToUsersModel(userDto, user);
+        adaptUserDTOToUserModel(userDto, user);
 
         return userRepository.save(user);
     }
 
     /**
-     * This method adds a {@link Book} to an {@link Users}
+     * This method adds a {@link Book} to an {@link User}
      *
      * @param userId: user's id
-     * @param bookId: id of the Book to add to an User
-     * @return the {@link Users} updated
+     * @param bookId:   id of the Book to add to an User
+     * @return the {@link User} updated
      */
     @Transactional
-    public Users addBookToAUser(Long userId, Long bookId) {
-        Users user = this.findOne(userId);
+    public User addBookToAUser(Long userId, Long bookId) {
+        User user = this.findOne(userId);
         Book book = bookService.findOne(bookId);
         user.addBook(book);
         return userRepository.save(user);
     }
 
     /**
-     * This method removes a {@link Book} from a {@link Users}
+     * This method removes a {@link Book} from a {@link User}
      *
      * @param userId: user's id
-     * @param bookId: id of the Book to remove to an User
-     * @return the {@link Users} updated
+     * @param bookId:   id of the Book to remove to an User
+     * @return the {@link User} updated
      */
     @Transactional
-    public Users removeBookToAUser(Long userId, Long bookId) {
-        Users user = this.findOne(userId);
+    public User removeBookToAUser(Long userId, Long bookId) {
+        User user = this.findOne(userId);
         Book book = bookService.findOne(bookId);
         user.removeBook(book);
         return userRepository.save(user);
     }
 
-    private void adaptUsersDTOToUsersModel(UserDTO userDTO, Users user) {
+    private void adaptUserDTOToUserModel(UserDTO userDTO, User user) {
         user.setUsername(userDTO.getUsername());
         user.setBirthdate(userDTO.getBirthdate());
         user.setName(userDTO.getName());

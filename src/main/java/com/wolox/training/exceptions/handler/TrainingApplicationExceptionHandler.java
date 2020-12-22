@@ -1,5 +1,6 @@
 package com.wolox.training.exceptions.handler;
 
+import com.wolox.training.exceptions.BookAlreadyOwnedException;
 import com.wolox.training.exceptions.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -19,6 +20,14 @@ public class TrainingApplicationExceptionHandler {
                 .append(error.getMessage())
                 .toString();
         return new GenericError(error.getCode(), message);
+    }
+
+    @ExceptionHandler({BookAlreadyOwnedException.class})
+    @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
+    @ResponseBody
+    public GenericError bookAlreadyOwned(BookAlreadyOwnedException ex) {
+        ErrorsEnum error = ErrorsEnum.BOOK_ALREADY_OWNED;
+        return new GenericError(error.getCode(), error.getMessage());
     }
 
 }

@@ -60,14 +60,14 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @PostMapping("/{id}/add")
-    public ResponseEntity<User> add(@PathVariable(name = "id") Long userId, @RequestParam Long bookId) {
+    @PutMapping("/{id}/books/add")
+    public ResponseEntity<User> addBook(@PathVariable(name = "id") Long userId, @RequestParam Long bookId) {
         User user = userService.addBookToAUser(userId, bookId);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @PostMapping("/{id}/remove")
-    public ResponseEntity<User> create(@PathVariable(name = "id") Long userId, @RequestParam Long bookId) {
+    @DeleteMapping("/{id}/books/remove")
+    public ResponseEntity<User> removeBook(@PathVariable(name = "id") Long userId, @RequestParam Long bookId) {
         User user = userService.removeBookToAUser(userId, bookId);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }

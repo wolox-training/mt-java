@@ -44,11 +44,7 @@ public class User {
     @ApiModelProperty(notes = "The user's birthdate")
     private LocalDate birthdate;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "books_users",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "book_id",
-                    referencedColumnName = "id"))
+    @ManyToMany(mappedBy = "users")
     private List<Book> books = new ArrayList<>();
 
     public List<Book> getBooks() {

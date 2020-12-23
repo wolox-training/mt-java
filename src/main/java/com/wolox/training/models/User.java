@@ -5,10 +5,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -42,20 +45,20 @@ public class User {
         return (List<Book>) Collections.unmodifiableList(books);
     }
 
-    public boolean addBook(Book book){
-        if (books.contains(book)){
+    public boolean addBook(Book book) {
+        if (books.contains(book)) {
             throw new BookAlreadyOwnedException();
         }
 
         return books.add(book);
     }
 
-    public boolean removeBook(Book book){
-       if(books.contains(book)){
-           return books.remove(book);
-       }
+    public boolean removeBook(Book book) {
+        if (books.contains(book)) {
+            return books.remove(book);
+        }
 
-       return false;
+        return false;
     }
 
 }

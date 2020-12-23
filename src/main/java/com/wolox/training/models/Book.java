@@ -1,5 +1,7 @@
 package com.wolox.training.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -53,6 +55,7 @@ public class Book {
     private String isbn;
 
     @ManyToMany(cascade = {CascadeType.REFRESH, CascadeType.MERGE})
+    @JsonBackReference
     private List<User> users = new ArrayList<>();
 
     @Override

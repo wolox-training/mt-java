@@ -12,13 +12,18 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.Setter;
 
 @Entity
+@Data
 @Table(name = "users")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter(AccessLevel.NONE)
     private long id;
 
     @NotNull
@@ -33,44 +38,8 @@ public class User {
     @ManyToMany(mappedBy = "users")
     private List<Book> books = new ArrayList<>();
 
-    public User() {
-
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public LocalDate getBirthdate() {
-        return birthdate;
-    }
-
-    public void setBirthdate(LocalDate birthdate) {
-        this.birthdate = birthdate;
-    }
-
     public List<Book> getBooks() {
         return (List<Book>) Collections.unmodifiableList(books);
-    }
-
-    public void setBooks(List<Book> books) {
-        this.books = books;
     }
 
     public boolean addBook(Book book){
@@ -82,7 +51,6 @@ public class User {
     }
 
     public boolean removeBook(Book book){
-
        if(books.contains(book)){
            return books.remove(book);
        }

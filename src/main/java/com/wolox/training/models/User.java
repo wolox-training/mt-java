@@ -1,6 +1,8 @@
 package com.wolox.training.models;
 
 import com.wolox.training.exceptions.BookAlreadyOwnedException;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,6 +23,7 @@ import lombok.Setter;
 
 @Entity
 @Data
+@ApiModel(description = "User from the Wolox Training API")
 @Table(name = "users")
 public class User {
 
@@ -30,12 +33,15 @@ public class User {
     private long id;
 
     @NotNull
+    @ApiModelProperty(notes = "The user's username")
     private String username;
 
     @NotNull
+    @ApiModelProperty(notes = "The user's name")
     private String name;
 
     @NotNull
+    @ApiModelProperty(notes = "The user's birthdate")
     private LocalDate birthdate;
 
     @ManyToMany(mappedBy = "users")

@@ -1,7 +1,7 @@
 package com.wolox.training.controllers;
 
 import com.wolox.training.dtos.UserDTO;
-import com.wolox.training.models.Users;
+import com.wolox.training.models.User;
 import com.wolox.training.services.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,36 +30,36 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    @ApiOperation(value = "List all users", response = Users.class)
+    @ApiOperation(value = "List all users", response = User.class)
     @ApiResponses(value = @ApiResponse(code = 200, message = "Successfully users retrieves"))
-    public ResponseEntity<List<Users>> findAllUsers() {
-        List<Users> users = userService.findAll();
+    public ResponseEntity<List<User>> findAll() {
+        List<User> users = userService.findAll();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @GetMapping("/username")
-    @ApiOperation(value = "Giving a username, return the user", response = Users.class)
+    @ApiOperation(value = "Giving a username, return the user", response = User.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully user retrieve"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")})
-    public ResponseEntity<Users> findByUsername(@RequestParam(name = "username") String username) {
-        Users user = userService.findByUsername(username);
+    public ResponseEntity<User> findByUsername(@RequestParam(name = "username") String username) {
+        User user = userService.findByUsername(username);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "Giving an id, return the user", response = Users.class)
+    @ApiOperation(value = "Giving an id, return the user", response = User.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully user retrieve"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")})
-    public ResponseEntity<Users> findOneUser(@PathVariable Long id) {
-        Users user = userService.findOne(id);
+    public ResponseEntity<User> findOne(@PathVariable Long id) {
+        User user = userService.findOne(id);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PostMapping
-    @ApiOperation(value = "Creates a user and then returns it", response = Users.class)
+    @ApiOperation(value = "Creates a user and then returns it", response = User.class)
     @ApiResponses(value = @ApiResponse(code = 201, message = "User created successfully"))
-    public ResponseEntity<Users> createUser(@RequestBody UserDTO userDto) {
-        Users user = userService.create(userDto);
+    public ResponseEntity<User> create(@RequestBody UserDTO userDto) {
+        User user = userService.create(userDto);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
@@ -73,30 +73,29 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    @ApiOperation(value = "Giving an id, updates the user", response = Users.class)
+    @ApiOperation(value = "Giving an id, updates the user", response = User.class)
     @ApiResponses(value = {@ApiResponse(code = 204, message = "User updated successfully"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")})
-    public ResponseEntity<Users> updateUser(@RequestBody UserDTO userDto, @PathVariable Long id) {
-        Users user = userService.updateUser(userDto, id);
+    public ResponseEntity<User> updateUser(@RequestBody UserDTO userDto, @PathVariable Long id) {
+        User user = userService.updateUser(userDto, id);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @PostMapping("/{id}/add")
-    @ApiOperation(value = "Giving a userId and bookId, return the user with the book added", response = Users.class)
+    @PutMapping("/{id}/books/add")
+    @ApiOperation(value = "Giving a userId and bookId, return the user with the book added", response = User.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully user retrieve"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")})
-    public ResponseEntity<Users> add(@PathVariable(name="id") Long userId, @RequestParam Long bookId) {
-        Users user = userService.addBookToAUser(userId, bookId);
+    public ResponseEntity<User> addBook(@PathVariable(name = "id") Long userId, @RequestParam Long bookId) {
+        User user = userService.addBookToAUser(userId, bookId);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @PostMapping("/{id}/remove")
-    @ApiOperation(value = "Giving a userId and bookId, return the user with the book removed", response = Users.class)
+    @DeleteMapping("/{id}/books/remove")
+    @ApiOperation(value = "Giving a userId and bookId, return the user with the book removed", response = User.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully user retrieve"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")})
-    public ResponseEntity<Users> create(@PathVariable(name="id") Long userId, @RequestParam Long bookId) {
-        Users user = userService.removeBookToAUser(userId, bookId);
+    public ResponseEntity<User> removeBook(@PathVariable(name = "id") Long userId, @RequestParam Long bookId) {
+        User user = userService.removeBookToAUser(userId, bookId);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
-
 }

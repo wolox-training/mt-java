@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -24,8 +25,9 @@ import lombok.Setter;
 
 @Entity
 @Data
-@ApiModel(description = "Users from the Wolox Training API")
-public class Users {
+@ApiModel(description = "User from the Wolox Training API")
+@Table(name = "users")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,11 +46,7 @@ public class Users {
     @ApiModelProperty(notes = "The user's birthdate")
     private LocalDate birthdate;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "books_users",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "book_id",
-                    referencedColumnName = "id"))
+    @ManyToMany(mappedBy = "users")
     private List<Book> books = new ArrayList<>();
 
     public List<Book> getBooks() {

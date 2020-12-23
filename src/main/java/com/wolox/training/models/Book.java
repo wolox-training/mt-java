@@ -53,9 +53,9 @@ public class Book {
     @Column(nullable = false, unique = true)
     private String isbn;
 
-    @ManyToMany(mappedBy = "books", cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     @JsonBackReference
-    private List<Users> users = new ArrayList<>();
+    private List<User> users = new ArrayList<>();
 
     public void setAuthor(String author) {
         String message = String.format(Constants.CHECK_NULL_MESSAGE, "author");

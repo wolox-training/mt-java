@@ -9,11 +9,15 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -21,8 +25,9 @@ import lombok.Setter;
 
 @Entity
 @Data
-@ApiModel(description = "Users from the Wolox Training API")
-public class Users {
+@ApiModel(description = "User from the Wolox Training API")
+@Table(name = "users")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,7 +47,6 @@ public class Users {
     private LocalDate birthdate;
 
     @ManyToMany(mappedBy = "users")
-    @ApiModelProperty(notes = "The user's book list")
     private List<Book> books = new ArrayList<>();
 
     public List<Book> getBooks() {

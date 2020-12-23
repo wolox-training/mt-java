@@ -1,7 +1,6 @@
 package com.wolox.training.models;
 
-import com.google.common.base.Preconditions;
-import com.wolox.training.commons.Constants;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -54,7 +53,7 @@ public class Book {
     @Column(nullable = false, unique = true)
     private String isbn;
 
-    @ManyToMany(mappedBy = "books", cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     @JsonBackReference
     private List<User> users = new ArrayList<>();
 

@@ -1,11 +1,13 @@
 package com.wolox.training.services;
 
 import com.wolox.training.dtos.BookDTO;
+import com.wolox.training.dtos.BookInfoDTO;
 import com.wolox.training.exceptions.ObjectNotFoundException;
 import com.wolox.training.models.Book;
 import com.wolox.training.repositories.BookRepository;
 import java.util.List;
 import java.util.Optional;
+import org.checkerframework.checker.nullness.Opt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +20,9 @@ public class BookService {
 
     @Autowired
     private BookRepository bookRepository;
+
+    @Autowired
+    private OpenLibraryService openLibraryService;
 
     /**
      * This method returns a list of {@link Book}
@@ -36,6 +41,31 @@ public class BookService {
      */
     public Optional<Book> findByAuthor(String bookAuthor) {
         return bookRepository.findByAuthor(bookAuthor);
+    }
+
+    /**
+     * This method returns a {@link Optional<Book>} by ISBN
+     *
+     * @param bookIsbn: book's ISBN
+     * @return a {@link Optional<Book>} by ISBN
+     */
+    public Optional<Book> findByISBN(String bookIsbn) {
+        return bookRepository.findByIsbn(bookIsbn);
+    }
+
+    /**
+     * This method returns a {@link Book} saved on db from OpenLibraryService
+     *
+     * @param bookIsbn: book's ISBN
+     * @return a {@link Book} created retrieved from OpenLibraryService
+     */
+    @Transactional
+    public Book findByIsbnExternalApi(String bookIsbn) {
+        BookInfoDTO bookInfoDTO = openLibraryService.bookInfo(bookIsbn)
+                .orElseThrow(() -> new ObjectNotFoundException(BOOK));
+        Book book = new Book();
+        adaptBookInfoToBookModel(bookInfoDTO, book);
+        return bookRepository.save(book);
     }
 
     /**
@@ -102,4 +132,17 @@ public class BookService {
         book.setTitle(bookDto.getTitle());
         book.setYear(bookDto.getYear());
     }
+
+    private void adaptBookInfoToBookModel(BookInfoDTO bookInfo, Book book) {
+        book.setIsbn(bookInfo.getIsbn());
+        book.setYear(bookInfo.getPublishDate());
+        book.setAuthor(bookInfo.getAuthors().toString());
+        book.setPublisher(bookInfo.getPublishers().toString());
+        book.setTitle(bookInfo.getTitle());
+        book.setSubtitle(bookInfo.getSubtitle());
+        book.setPages(bookInfo.getNumberOfPages());
+        book.setImage("-");
+        book.setGenre("-");
+    }
+
 }

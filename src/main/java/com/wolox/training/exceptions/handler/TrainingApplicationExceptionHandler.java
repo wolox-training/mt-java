@@ -1,6 +1,7 @@
 package com.wolox.training.exceptions.handler;
 
 import com.wolox.training.exceptions.BookAlreadyOwnedException;
+import com.wolox.training.exceptions.MyJsonProcessingException;
 import com.wolox.training.exceptions.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -28,6 +29,14 @@ public class TrainingApplicationExceptionHandler {
     public GenericError bookAlreadyOwned(BookAlreadyOwnedException ex) {
         ErrorsEnum error = ErrorsEnum.BOOK_ALREADY_OWNED;
         return new GenericError(error.getCode(), error.getMessage());
+    }
+
+    @ExceptionHandler({MyJsonProcessingException.class})
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseBody
+    public GenericError jsonProcessingException(MyJsonProcessingException ex) {
+        ErrorsEnum error = ErrorsEnum.JSON_PROCESSING_EXCEPTION;
+        return new GenericError(error.getCode(), ex.getError());
     }
 
 }

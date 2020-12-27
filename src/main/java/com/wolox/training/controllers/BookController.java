@@ -70,10 +70,18 @@ public class BookController {
         Optional<Book> bookOptional = bookService.findByISBN(isbn);
 
         if (!bookOptional.isPresent()) {
-            return new ResponseEntity<>(bookService.findByIsbnExternalApi(isbn), HttpStatus.CREATED);
+            return new ResponseEntity<>(bookService.findByIsbnExternalApi(isbn),
+                    HttpStatus.CREATED);
         }
 
         return new ResponseEntity<>(bookOptional.get(), HttpStatus.OK);
+    }
+
+    @GetMapping("/bookCollection")
+    public ResponseEntity<List<Book>> findByPublisherAndGenreAndYear(@RequestParam String publisher,
+            @RequestParam String genre, @RequestParam String year) {
+        return new ResponseEntity<>(
+                bookService.findByPublisherAndGenreAndYear(publisher, genre, year), HttpStatus.OK);
     }
 
 

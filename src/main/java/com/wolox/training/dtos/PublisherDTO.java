@@ -8,7 +8,7 @@ public class PublisherDTO {
     public String name;
 
     @Override
-    public String toString(){
+    public String toString() {
         return this.name;
     }
 }

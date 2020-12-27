@@ -7,7 +7,6 @@ import com.wolox.training.models.Book;
 import com.wolox.training.repositories.BookRepository;
 import java.util.List;
 import java.util.Optional;
-import org.checkerframework.checker.nullness.Opt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -119,6 +118,10 @@ public class BookService {
         adaptBookDtoToBookModel(bookDto, book);
 
         return bookRepository.save(book);
+    }
+
+    public List<Book> findByPublisherAndGenreAndYear(String publisher, String genre, String year) {
+        return bookRepository.findByPublisherAndGenreAndYear(publisher, genre, year);
     }
 
     private void adaptBookDtoToBookModel(BookDTO bookDto, Book book) {

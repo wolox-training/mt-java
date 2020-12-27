@@ -5,6 +5,7 @@ import com.wolox.training.exceptions.ObjectNotFoundException;
 import com.wolox.training.models.Book;
 import com.wolox.training.models.User;
 import com.wolox.training.repositories.UserRepository;
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -127,6 +128,21 @@ public class UserService {
         Book book = bookService.findOne(bookId);
         user.removeBook(book);
         return userRepository.save(user);
+    }
+
+    /**
+     * This methods retrieves a {@link List<User>} that contains infix on his 'name' and his
+     * birthdate is betweeen startBirthdate and endBirthdate
+     *
+     * @param infix:         sequence contained on the user's username
+     * @param startBirthdate
+     * @param endBirthdate
+     * @return a {@link List<User>}
+     */
+    public List<User> findByNameContainingAndBirthdateBetween(String infix,
+            LocalDate startBirthdate, LocalDate endBirthdate) {
+        return userRepository
+                .findByNameContainingAndBirthdateBetween(infix, startBirthdate, endBirthdate);
     }
 
     private void adaptUserDTOToUserModel(UserDTO userDTO, User user) {

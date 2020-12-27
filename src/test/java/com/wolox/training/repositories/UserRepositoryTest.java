@@ -56,7 +56,7 @@ public class UserRepositoryTest {
     @Test
     public void testingFindByNameContainingAndBirthdateBetweenMethod(){
         userRepository.save(oneTestUser);
-        List<User> users = userRepository.findByNameContainingAndBirthdateBetween("tias", LocalDate.of(1995,9,11), LocalDate.of(1995,11,11) );
+        List<User> users = userRepository.findByNameIgnoreCaseContainingAndBirthdateBetween("TIAS", LocalDate.of(1995,9,11), LocalDate.of(1995,11,11) );
         assertThat(users, is(not(empty())));
     }
 

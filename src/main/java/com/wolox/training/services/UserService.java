@@ -157,7 +157,8 @@ public class UserService {
     public List<User> findByNameContainingAndBirthdateBetween(String infix,
             LocalDate startBirthdate, LocalDate endBirthdate) {
         return userRepository
-                .findByNameIgnoreCaseContainingAndBirthdateBetween(infix, startBirthdate, endBirthdate);
+                .findByNameIgnoreCaseContainingAndBirthdateBetween(infix, startBirthdate,
+                        endBirthdate);
     }
 
     private void adaptUserDTOToUserModel(UserDTO userDTO, User user) {

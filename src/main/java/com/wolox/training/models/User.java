@@ -1,6 +1,8 @@
 package com.wolox.training.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.google.common.base.Preconditions;
 import com.wolox.training.commons.Constants;
 import com.wolox.training.exceptions.BookAlreadyOwnedException;
@@ -27,6 +29,7 @@ import lombok.Setter;
 @Entity
 @Data
 @Table(name = "users")
+@JsonInclude(Include.NON_NULL)
 @ApiModel(description = "Users from the Wolox Training API")
 public class User {
 

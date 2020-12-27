@@ -7,6 +7,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import java.security.Principal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +19,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -28,6 +31,15 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @GetMapping("/loggedUser")
+    @ApiOperation(value = "Logged user's username", response = String.class)
+    @ApiResponses(value = @ApiResponse(code = 200, message = "Successfully username"))
+    public ResponseEntity<User> currentUserName(Principal principal) {
+        User user = new User();
+        user.setUsername(principal.getName());
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
 
     @GetMapping
     @ApiOperation(value = "List all users", response = User.class)

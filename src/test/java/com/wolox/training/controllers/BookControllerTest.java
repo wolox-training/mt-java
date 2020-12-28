@@ -4,6 +4,7 @@ import com.wolox.training.dtos.BookDTO;
 import com.wolox.training.exceptions.ObjectNotFoundException;
 import com.wolox.training.models.Book;
 import com.wolox.training.services.BookService;
+import com.wolox.training.services.BookServiceTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

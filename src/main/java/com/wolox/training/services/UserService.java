@@ -99,7 +99,7 @@ public class UserService {
      * This method adds a {@link Book} to an {@link User}
      *
      * @param userId: user's id
-     * @param bookId:   id of the Book to add to an User
+     * @param bookId: id of the Book to add to an User
      * @return the {@link User} updated
      */
     @Transactional
@@ -114,7 +114,7 @@ public class UserService {
      * This method removes a {@link Book} from a {@link User}
      *
      * @param userId: user's id
-     * @param bookId:   id of the Book to remove to an User
+     * @param bookId: id of the Book to remove to an User
      * @return the {@link User} updated
      */
     @Transactional

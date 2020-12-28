@@ -13,13 +13,15 @@ repositories {
 }
 
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	implementation 'junit:junit:4.12'
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile group: 'org.postgresql', name: 'postgresql', version: '42.2.5'
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	compileOnly 'org.projectlombok:lombok:1.18.16'
 	annotationProcessor 'org.projectlombok:lombok:1.18.16'
 	testCompileOnly 'org.projectlombok:lombok:1.18.16'
+	testCompile('com.h2database:h2')
 	testAnnotationProcessor 'org.projectlombok:lombok:1.18.16'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'

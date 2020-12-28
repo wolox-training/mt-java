@@ -85,7 +85,8 @@ public class UserController {
     @ApiOperation(value = "Giving a userId and bookId, return the user with the book added", response = User.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully user retrieve"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")})
-    public ResponseEntity<User> addBook(@PathVariable(name = "id") Long userId, @RequestParam Long bookId) {
+    public ResponseEntity<User> addBook(@PathVariable(name = "id") Long userId,
+            @RequestParam Long bookId) {
         User user = userService.addBookToAUser(userId, bookId);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
@@ -94,7 +95,8 @@ public class UserController {
     @ApiOperation(value = "Giving a userId and bookId, return the user with the book removed", response = User.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully user retrieve"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")})
-    public ResponseEntity<User> removeBook(@PathVariable(name = "id") Long userId, @RequestParam Long bookId) {
+    public ResponseEntity<User> removeBook(@PathVariable(name = "id") Long userId,
+            @RequestParam Long bookId) {
         User user = userService.removeBookToAUser(userId, bookId);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }

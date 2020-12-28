@@ -1,6 +1,7 @@
 package com.wolox.training.models;
 
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.wolox.training.commons.Constants;
 import com.wolox.training.exceptions.BookAlreadyOwnedException;
 import io.swagger.annotations.ApiModel;
@@ -9,13 +10,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -55,12 +53,14 @@ public class User {
 
     public void setUsername(String username) {
         String message = String.format(Constants.CHECK_NULL_MESSAGE, "username");
-        this.username = Preconditions.checkNotNull(username, message);
+        Preconditions.checkArgument(!Strings.isNullOrEmpty(username), message);
+        this.username = username;
     }
 
     public void setName(String name) {
         String message = String.format(Constants.CHECK_NULL_MESSAGE, "name");
-        this.name = Preconditions.checkNotNull(name, message);
+        Preconditions.checkArgument(!Strings.isNullOrEmpty(name), message);
+        this.name = name;
     }
 
     public void setBirthdate(LocalDate birthdate) {

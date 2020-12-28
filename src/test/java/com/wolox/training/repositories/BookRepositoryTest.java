@@ -1,6 +1,7 @@
 package com.wolox.training.repositories;
 
 import com.wolox.training.models.Book;
+import javax.validation.ConstraintViolationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.Assert.assertNotNull;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @DataJpaTest
@@ -44,5 +46,26 @@ public class BookRepositoryTest {
         Assertions.assertThrows(NullPointerException.class, ()-> oneTestBook.setAuthor(null));
     }
 
+    @Test
+    public void testingRepeatingUniqueValueDB(){
+        bookRepository.save(oneTestBook);
+        Book otherBook = new Book();
+        otherBook.setTitle("IT");
+        otherBook.setPages(234);
+        otherBook.setPublisher("Viking Press");
+        otherBook.setIsbn("11112222333");
+        otherBook.setImage("image2.png");
+        otherBook.setGenre("terror");
+        otherBook.setAuthor("Stephen King");
+        otherBook.setSubtitle("-");
+        otherBook.setYear("1986");
+        Assertions.assertThrows(DataIntegrityViolationException.class, ()-> bookRepository.save(otherBook));
+    }
+
+    @Test
+    public void testingSaveObjectWithNullValues(){
+        Book otherBook = new Book();
+        Assertions.assertThrows(ConstraintViolationException.class, ()-> bookRepository.save(otherBook));
+    }
 
 }

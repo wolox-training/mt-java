@@ -40,8 +40,8 @@ public class BookRepositoryTest {
     }
 
     @Test
-    public void whenCreateBook_thenBookIsPersisted(){
-       Assertions.assertThrows(,oneTestBook.setAuthor(null));
+    public void testingGuavaPreconditions(){
+        Assertions.assertThrows(NullPointerException.class, ()-> oneTestBook.setAuthor(null));
     }
 
 

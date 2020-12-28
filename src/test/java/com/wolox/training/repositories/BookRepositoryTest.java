@@ -68,7 +68,4 @@ public class BookRepositoryTest {
         Assertions.assertThrows(ConstraintViolationException.class, ()-> bookRepository.save(otherBook));
     }
 
-
-
-
 }

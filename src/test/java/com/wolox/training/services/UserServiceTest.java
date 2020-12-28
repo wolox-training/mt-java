@@ -62,7 +62,7 @@ public class UserServiceTest {
     @Test
     public void testingGuavaPreconditions(){
         dto.setUsername(null);
-        Assertions.assertThrows(NullPointerException.class, ()-> userService.create(dto));
+        Assertions.assertThrows(IllegalArgumentException.class, ()-> userService.create(dto));
     }
 
 }

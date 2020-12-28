@@ -66,7 +66,7 @@ public class BookServiceTest {
     @Test
     public void testingGuavaPreconditions(){
         dto.setAuthor(null);
-        Assertions.assertThrows(NullPointerException.class, ()-> mockService.create(dto));
+        Assertions.assertThrows(IllegalArgumentException.class, ()-> mockService.create(dto));
     }
 
     @Test

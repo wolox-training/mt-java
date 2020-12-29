@@ -141,7 +141,7 @@ public class UserService {
     public User updateUserPassword(Long userId, String password) {
         User user = this.findOne(userId);
         setEncodedPassword(user, password);
-        return user;
+        return userRepository.save(user);
     }
 
     private void adaptUserDTOToUserModel(UserDTO userDTO, User user) {

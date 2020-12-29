@@ -132,12 +132,13 @@ public class UserService {
 
     /**
      * This method sets {@link User} password
-     * @param userId: user's id
+     *
+     * @param userId:   user's id
      * @param password: new user's password
      * @return the {@link User} updated
      */
     @Transactional
-    public User updateUserPassword(Long userId, String password){
+    public User updateUserPassword(Long userId, String password) {
         User user = this.findOne(userId);
         setEncodedPassword(user, password);
         return userRepository.save(user);

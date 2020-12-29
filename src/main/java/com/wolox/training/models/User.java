@@ -63,7 +63,7 @@ public class User {
         this.username = username;
     }
 
-    public void setPassword(String password){
+    public void setPassword(String password) {
         String message = String.format(Constants.CHECK_NULL_MESSAGE, "password");
         Preconditions.checkArgument(!Strings.isNullOrEmpty(password), message);
         this.password = password;

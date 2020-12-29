@@ -36,6 +36,7 @@ public class UserControllerTest {
     public void setUp() {
         oneTestUser = new User();
         oneTestUser.setUsername("torsello");
+        oneTestUser.setPassword("123456");
         oneTestUser.setName("Matias Torsello");
         oneTestUser.setBirthdate(LocalDate.of(1995,10,11));
     }
@@ -69,6 +70,12 @@ public class UserControllerTest {
     @Test
     public void whenFindByIdWhichNoExists() throws Exception {
         Mockito.when(mockService.findOne(1L)).thenThrow(ObjectNotFoundException.class);
+    }
+
+    @Test
+    public void testingGetAllUsers_WithoutAuth() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/api/users/").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isUnauthorized());
     }
 
 }

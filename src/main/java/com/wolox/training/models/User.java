@@ -1,5 +1,6 @@
 package com.wolox.training.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.wolox.training.commons.Constants;
@@ -37,6 +38,11 @@ public class User {
     private String username;
 
     @NotNull
+    @JsonIgnore
+    @ApiModelProperty(notes = "The user's password")
+    private String password;
+
+    @NotNull
     @ApiModelProperty(notes = "The user's name")
     private String name;
 
@@ -55,6 +61,12 @@ public class User {
         String message = String.format(Constants.CHECK_NULL_MESSAGE, "username");
         Preconditions.checkArgument(!Strings.isNullOrEmpty(username), message);
         this.username = username;
+    }
+
+    public void setPassword(String password){
+        String message = String.format(Constants.CHECK_NULL_MESSAGE, "password");
+        Preconditions.checkArgument(!Strings.isNullOrEmpty(password), message);
+        this.password = password;
     }
 
     public void setName(String name) {

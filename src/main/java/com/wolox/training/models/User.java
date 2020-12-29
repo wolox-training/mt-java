@@ -29,7 +29,6 @@ import lombok.Setter;
 @ApiModel(description = "User from the Wolox Training API")
 @Table(name = "users")
 @JsonInclude(Include.NON_NULL)
-@ApiModel(description = "Users from the Wolox Training API")
 public class User {
 
     @Id

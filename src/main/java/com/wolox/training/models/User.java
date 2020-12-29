@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.wolox.training.commons.Constants;
 import com.wolox.training.exceptions.BookAlreadyOwnedException;
 import io.swagger.annotations.ApiModel;
@@ -12,13 +13,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -28,6 +26,7 @@ import lombok.Setter;
 
 @Entity
 @Data
+@ApiModel(description = "User from the Wolox Training API")
 @Table(name = "users")
 @JsonInclude(Include.NON_NULL)
 @ApiModel(description = "Users from the Wolox Training API")
@@ -55,11 +54,7 @@ public class User {
     @ApiModelProperty(notes = "The user's birthdate")
     private LocalDate birthdate;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "books_users",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "book_id",
-                    referencedColumnName = "id"))
+    @ManyToMany(mappedBy = "users")
     private List<Book> books = new ArrayList<>();
 
     public List<Book> getBooks() {
@@ -68,17 +63,20 @@ public class User {
 
     public void setUsername(String username) {
         String message = String.format(Constants.CHECK_NULL_MESSAGE, "username");
-        this.username = Preconditions.checkNotNull(username, message);
+        Preconditions.checkArgument(!Strings.isNullOrEmpty(username), message);
+        this.username = username;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(String password){
         String message = String.format(Constants.CHECK_NULL_MESSAGE, "password");
-        this.password = Preconditions.checkNotNull(password, message);
+        Preconditions.checkArgument(!Strings.isNullOrEmpty(password), message);
+        this.password = password;
     }
 
     public void setName(String name) {
         String message = String.format(Constants.CHECK_NULL_MESSAGE, "name");
-        this.name = Preconditions.checkNotNull(name, message);
+        Preconditions.checkArgument(!Strings.isNullOrEmpty(name), message);
+        this.name = name;
     }
 
     public void setBirthdate(LocalDate birthdate) {

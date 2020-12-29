@@ -34,7 +34,7 @@ public class Book {
     private String author;
 
     @NotNull
-    private String image;
+    private String image = "-";
 
     @NotNull
     private String title;

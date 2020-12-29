@@ -85,7 +85,8 @@ public class UserController {
     @ApiOperation(value = "Giving an id, updates the user password", response = User.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "User updated successfully"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")})
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestParam(name = "password") String password) {
+    public ResponseEntity<User> updateUser(@PathVariable Long id,
+            @RequestParam(name = "password") String password) {
         User user = userService.updateUserPassword(id, password);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }

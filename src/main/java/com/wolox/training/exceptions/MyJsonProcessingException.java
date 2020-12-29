@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = false)
 @Data
-public class MyJsonProcessingException extends RuntimeException{
+public class MyJsonProcessingException extends RuntimeException {
 
     private String error;
 

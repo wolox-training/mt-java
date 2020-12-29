@@ -10,13 +10,15 @@ import com.wolox.training.dtos.BookInfoDTO;
 import com.wolox.training.exceptions.MyJsonProcessingException;
 import java.util.HashMap;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
 public class OpenLibraryService {
 
-    private static final String BASE_URL = "https://openlibrary.org/api/books?bibkeys=%s&format=json&jscmd=data";
+    @Value("${external.api.url}")
+    private String baseUrl;
 
     public Optional<BookInfoDTO> bookInfo(String isbn) {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -26,7 +28,7 @@ public class OpenLibraryService {
 
         RestTemplate restTemplate = new RestTemplate();
         String queryParam = "ISBN:" + isbn;
-        String url = String.format(BASE_URL, queryParam);
+        String url = String.format(baseUrl, queryParam);
         BookInfoDTO bookInfo = new BookInfoDTO();
 
         try {

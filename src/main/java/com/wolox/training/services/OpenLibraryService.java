@@ -29,16 +29,18 @@ public class OpenLibraryService {
                 .append("&format=json&jscmd=data").toString();
         BookInfoDTO bookInfo = new BookInfoDTO();
 
-        try{
-            JsonNode bookInfoJsonNode = objectMapper.readTree(restTemplate.getForObject(url, String.class));
-            HashMap<String, Object> mapa = objectMapper.treeToValue(bookInfoJsonNode.get("ISBN:"+isbn), HashMap.class);
+        try {
+            JsonNode bookInfoJsonNode = objectMapper
+                    .readTree(restTemplate.getForObject(url, String.class));
+            HashMap<String, Object> mapa = objectMapper
+                    .treeToValue(bookInfoJsonNode.get("ISBN:" + isbn), HashMap.class);
             bookInfo = objectMapper.convertValue(mapa, BookInfoDTO.class);
 
-            if(bookInfo!=null){
+            if (bookInfo != null) {
                 bookInfo.setIsbn(isbn);
             }
 
-        }catch (JsonProcessingException e){
+        } catch (JsonProcessingException e) {
             throw new MyJsonProcessingException(e.getMessage());
         }
 

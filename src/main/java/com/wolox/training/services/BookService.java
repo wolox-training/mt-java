@@ -141,8 +141,6 @@ public class BookService {
         book.setTitle(bookInfo.getTitle());
         book.setSubtitle(bookInfo.getSubtitle());
         book.setPages(bookInfo.getNumberOfPages());
-        book.setImage("-");
-        book.setGenre("-");
     }
 
 }

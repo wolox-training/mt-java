@@ -66,7 +66,8 @@ public class BookController {
         Optional<Book> bookOptional = bookService.findByISBN(isbn);
 
         if (!bookOptional.isPresent()) {
-            return new ResponseEntity<>(bookService.findByIsbnExternalApi(isbn), HttpStatus.CREATED);
+            return new ResponseEntity<>(bookService.findByIsbnExternalApi(isbn),
+                    HttpStatus.CREATED);
         }
 
         return new ResponseEntity<>(bookOptional.get(), HttpStatus.OK);

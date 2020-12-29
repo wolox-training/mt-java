@@ -24,10 +24,11 @@ dependencies {
 	testCompile('com.h2database:h2')
 	testAnnotationProcessor 'org.projectlombok:lombok:1.18.16'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	compile group: 'org.hibernate', name: 'hibernate-validator', version: '6.1.0.Final'
+	testCompile group: 'org.springframework.security', name: 'spring-security-test'
 	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
 	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 	compile 'org.springframework.plugin:spring-plugin-core:1.2.0.RELEASE'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.3.7.RELEASE'
 	compile group: 'com.google.guava', name: 'guava', version: '27.0-jre'
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-security'
 	testCompile group: 'org.springframework.security', name: 'spring-security-test'

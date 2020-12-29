@@ -31,14 +31,10 @@ public class BookController {
         return new ResponseEntity<>(books, HttpStatus.OK);
     }
 
-    @GetMapping("/book/{bookAuthor}")
+    @GetMapping("/author/{bookAuthor}")
     public ResponseEntity<Book> findByAuthor(@PathVariable String bookAuthor) {
-        Optional<Book> bookOptional = bookService.findByAuthor(bookAuthor);
-        if (bookOptional.isPresent()) {
-            return new ResponseEntity<>(bookOptional.get(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        Book book = bookService.findByAuthor(bookAuthor);
+        return new ResponseEntity<>(book, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

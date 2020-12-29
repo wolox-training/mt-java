@@ -129,10 +129,28 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    /**
+     * This method sets {@link User} password
+     * @param userId: user's id
+     * @param password: new user's password
+     * @return the {@link User} updated
+     */
+    @Transactional
+    public User updateUserPassword(Long userId, String password){
+        User user = this.findOne(userId);
+        setEncodedPassword(user, password);
+        return user;
+    }
+
     private void adaptUserDTOToUserModel(UserDTO userDTO, User user) {
         user.setUsername(userDTO.getUsername());
         user.setBirthdate(userDTO.getBirthdate());
         user.setName(userDTO.getName());
-        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        setEncodedPassword(user, userDTO.getPassword());
     }
+
+    private void setEncodedPassword(User user, String password) {
+        user.setPassword(passwordEncoder.encode(password));
+    }
+
 }

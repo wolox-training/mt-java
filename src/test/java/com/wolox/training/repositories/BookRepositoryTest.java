@@ -43,7 +43,7 @@ public class BookRepositoryTest {
 
     @Test
     public void testingGuavaPreconditions(){
-       Assertions.assertThrows(NullPointerException.class, ()-> oneTestBook.setAuthor(null));
+        Assertions.assertThrows(NullPointerException.class, ()-> oneTestBook.setAuthor(null));
     }
 
     @Test
@@ -67,8 +67,5 @@ public class BookRepositoryTest {
         Book otherBook = new Book();
         Assertions.assertThrows(ConstraintViolationException.class, ()-> bookRepository.save(otherBook));
     }
-
-
-
 
 }

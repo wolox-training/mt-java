@@ -1,6 +1,8 @@
 package com.wolox.training.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.wolox.training.commons.Constants;
@@ -26,6 +28,7 @@ import lombok.Setter;
 @Data
 @ApiModel(description = "User from the Wolox Training API")
 @Table(name = "users")
+@JsonInclude(Include.NON_NULL)
 public class User {
 
     @Id

@@ -3,9 +3,11 @@ package com.wolox.training.controllers;
 import com.wolox.training.dtos.BookDTO;
 import com.wolox.training.models.Book;
 import com.wolox.training.services.BookService;
-import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,7 +27,7 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
-    @GetMapping("/author/{bookAuthor}")
+    @GetMapping("/book/{bookAuthor}")
     public ResponseEntity<Book> findByAuthor(@PathVariable String bookAuthor) {
         Book book = bookService.findByAuthor(bookAuthor);
         return new ResponseEntity<>(book, HttpStatus.OK);
@@ -68,16 +70,20 @@ public class BookController {
     }
 
     @GetMapping("/bookCollection")
-    public ResponseEntity<List<Book>> findByPublisherAndGenreAndYear(
+    public ResponseEntity<Page<Book>> findByPublisherAndGenreAndYear(
             @RequestParam(required = false) String publisher,
             @RequestParam(required = false) String genre,
-            @RequestParam(required = false) String year) {
+            @RequestParam(required = false) String year,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "3") int size,
+            @RequestParam(defaultValue = "id") String sort) {
         return new ResponseEntity<>(
-                bookService.findByPublisherAndGenreAndYear(publisher, genre, year), HttpStatus.OK);
+                bookService.findByPublisherAndGenreAndYear(publisher, genre, year,
+                        PageRequest.of(page, size, Sort.by(sort))), HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<List<Book>> findAll(
+    public ResponseEntity<Page<Book>> findAll(
             @RequestParam(required = false, defaultValue = "") String publisher,
             @RequestParam(required = false, defaultValue = "") String genre,
             @RequestParam(required = false, defaultValue = "") String year,
@@ -86,11 +92,14 @@ public class BookController {
             @RequestParam(required = false, defaultValue = "") String title,
             @RequestParam(required = false, defaultValue = "") String subtitle,
             @RequestParam(required = false, defaultValue = "0") Integer pages,
-            @RequestParam(required = false, defaultValue = "") String isbn) {
+            @RequestParam(required = false, defaultValue = "") String isbn,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "3") int size,
+            @RequestParam(defaultValue = "id") String sort) {
         return new ResponseEntity<>(
                 bookService
                         .findAllBooks(publisher, genre, year, author, image, title, subtitle, pages,
-                                isbn), HttpStatus.OK);
+                                isbn, PageRequest.of(page, size, Sort.by(sort))), HttpStatus.OK);
     }
 
 

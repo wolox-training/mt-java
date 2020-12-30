@@ -1,8 +1,9 @@
 package com.wolox.training.repositories;
 
 import com.wolox.training.models.Book;
-import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,8 +19,8 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     @Query("SELECT b FROM Book b WHERE (:publisherName IS NULL OR b.publisher = :publisherName) "
             + "and (:genre IS NULL OR b.genre = :genre) "
             + "and (:year IS NULL OR b.year = :year)")
-    public List<Book> findByPublisherAndGenreAndYear(@Param("publisherName") String publisher,
-            @Param("genre") String genre, @Param("year") String year);
+    public Page<Book> findByPublisherAndGenreAndYear(@Param("publisherName") String publisher,
+            @Param("genre") String genre, @Param("year") String year, Pageable pageable);
 
     @Query("SELECT b FROM Book b WHERE (:publisherName = '' OR b.publisher = :publisherName) "
             + "and (:genre = '' OR b.genre = :genre) "
@@ -30,12 +31,12 @@ public interface BookRepository extends JpaRepository<Book, Long> {
             + "and (:subtitle = '' OR b.subtitle = :subtitle)"
             + "and (:pages = 0 OR b.pages = :pages)"
             + "and (:isbn = '' OR b.isbn = :isbn)")
-    public List<Book> findAllBooks(@Param("publisherName") String publisher,
+    public Page<Book> findAllBooks(@Param("publisherName") String publisher,
             @Param("genre") String genre, @Param("year") String year,
             @Param("author") String author,
             @Param("image") String image, @Param("title") String title,
             @Param("subtitle") String subtitle,
-            @Param("pages") Integer pages, @Param("isbn") String isbn);
-
+            @Param("pages") Integer pages, @Param("isbn") String isbn,
+            Pageable pageable);
 
 }

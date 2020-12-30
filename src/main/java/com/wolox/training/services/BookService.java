@@ -38,8 +38,9 @@ public class BookService {
      * @param bookAuthor: name of the book's author
      * @return a {@link Book} wrote by a bookAuthor
      */
-    public Optional<Book> findByAuthor(String bookAuthor) {
-        return bookRepository.findByAuthor(bookAuthor);
+    public Book findByAuthor(String bookAuthor) {
+        return bookRepository.findByAuthor(bookAuthor)
+                .orElseThrow(() -> new ObjectNotFoundException(BOOK));
     }
 
     /**
@@ -145,7 +146,6 @@ public class BookService {
         book.setSubtitle(bookInfo.getSubtitle());
         book.setPages(bookInfo.getNumberOfPages());
         book.setImage("-");
-        book.setGenre("-");
     }
 
 }

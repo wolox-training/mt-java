@@ -4,6 +4,7 @@ import com.wolox.training.dtos.UserDTO;
 import com.wolox.training.exceptions.ObjectNotFoundException;
 import com.wolox.training.models.User;
 import com.wolox.training.services.UserService;
+import com.wolox.training.services.UserServiceTest;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;

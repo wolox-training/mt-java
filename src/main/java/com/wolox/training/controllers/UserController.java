@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -85,28 +87,38 @@ public class UserController {
 
     @PutMapping("/{id}")
     @ApiOperation(value = "Giving an id, updates the user", response = User.class)
-    @ApiResponses(value = {@ApiResponse(code = 204, message = "User updated successfully"),
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "User updated successfully"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")})
     public ResponseEntity<User> updateUser(@RequestBody UserDTO userDto, @PathVariable Long id) {
         User user = userService.updateUser(userDto, id);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @PostMapping("/{id}/add")
+    @PutMapping("/{id}/password")
+    @ApiOperation(value = "Giving an id, updates the user password", response = User.class)
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "User updated successfully"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")})
+    public ResponseEntity<User> updateUser(@PathVariable Long id,
+            @RequestParam(name = "password") String password) {
+        User user = userService.updateUserPassword(id, password);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}/books/add")
     @ApiOperation(value = "Giving a userId and bookId, return the user with the book added", response = User.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully user retrieve"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")})
-    public ResponseEntity<User> add(@PathVariable(name = "id") Long userId,
+    public ResponseEntity<User> addBook(@PathVariable(name = "id") Long userId,
             @RequestParam Long bookId) {
         User user = userService.addBookToAUser(userId, bookId);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @PostMapping("/{id}/remove")
+    @DeleteMapping("/{id}/books/remove")
     @ApiOperation(value = "Giving a userId and bookId, return the user with the book removed", response = User.class)
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully user retrieve"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")})
-    public ResponseEntity<User> create(@PathVariable(name = "id") Long userId,
+    public ResponseEntity<User> removeBook(@PathVariable(name = "id") Long userId,
             @RequestParam Long bookId) {
         User user = userService.removeBookToAUser(userId, bookId);
         return new ResponseEntity<>(user, HttpStatus.OK);

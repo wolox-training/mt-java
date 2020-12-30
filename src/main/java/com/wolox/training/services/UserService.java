@@ -61,13 +61,14 @@ public class UserService {
     /**
      * This method creates an {@link User}
      *
-     * @param userDto: Data Transfer Object of {@link User}
+     * @param userDTO: Data Transfer Object of {@link User}
      * @return the {@link User} created
      */
     @Transactional
-    public User create(UserDTO userDto) {
+    public User create(UserDTO userDTO) {
         User user = new User();
-        adaptUserDTOToUserModel(userDto, user);
+        adaptUserDTOToUserModel(userDTO, user);
+        setEncodedPassword(user, userDTO.getPassword());
         return userRepository.save(user);
     }
 
@@ -131,6 +132,20 @@ public class UserService {
     }
 
     /**
+     * This method sets {@link User} password
+     *
+     * @param userId:   user's id
+     * @param password: new user's password
+     * @return the {@link User} updated
+     */
+    @Transactional
+    public User updateUserPassword(Long userId, String password) {
+        User user = this.findOne(userId);
+        setEncodedPassword(user, password);
+        return userRepository.save(user);
+    }
+
+    /**
      * This methods retrieves a {@link List<User>} that contains infix on his 'name' and his
      * birthdate is betweeen startBirthdate and endBirthdate
      *
@@ -149,6 +164,10 @@ public class UserService {
         user.setUsername(userDTO.getUsername());
         user.setBirthdate(userDTO.getBirthdate());
         user.setName(userDTO.getName());
-        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
     }
+
+    private void setEncodedPassword(User user, String password) {
+        user.setPassword(passwordEncoder.encode(password));
+    }
+
 }

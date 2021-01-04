@@ -1,9 +1,14 @@
 package com.wolox.training.repositories;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertNotNull;
 
 import com.wolox.training.models.User;
 import java.time.LocalDate;
+import java.util.List;
 import javax.validation.ConstraintViolationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,6 +32,7 @@ public class UserRepositoryTest {
         oneTestUser = new User();
         oneTestUser.setUsername("torsello");
         oneTestUser.setName("Matias Torsello");
+        oneTestUser.setPassword("pwd");
         oneTestUser.setBirthdate(LocalDate.of(1995,10,11));
     }
 
@@ -47,6 +53,12 @@ public class UserRepositoryTest {
         Assertions.assertThrows(ConstraintViolationException.class, ()-> userRepository.save(otherUser));
     }
 
+    @Test
+    public void testingFindByNameContainingAndBirthdateBetweenMethod(){
+        userRepository.save(oneTestUser);
+        List<User> users = userRepository.findByNameIgnoreCaseContainingAndBirthdateBetween("TIAS", LocalDate.of(1995,9,11), LocalDate.of(1995,11,11) );
+        assertThat(users, is(not(empty())));
+    }
 
 
 

@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -121,5 +122,16 @@ public class UserController {
             @RequestParam Long bookId) {
         User user = userService.removeBookToAUser(userId, bookId);
         return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @GetMapping("/specificUser")
+    @ApiOperation(value = "Giving an infix and startBirthdate and endBirthdate retrieves a list of Users", response = User.class, responseContainer = "List")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully user retrieve")})
+    public ResponseEntity<List<User>> findByNameContainingAndBirthdateBetween(
+            @RequestParam String infix, @RequestParam LocalDate startBirthdate,
+            @RequestParam LocalDate endBirthdate) {
+        return new ResponseEntity<>(userService
+                .findByNameContainingAndBirthdateBetween(infix, startBirthdate, endBirthdate),
+                HttpStatus.OK);
     }
 }

@@ -121,6 +121,10 @@ public class BookService {
         return bookRepository.save(book);
     }
 
+    public List<Book> findByPublisherAndGenreAndYear(String publisher, String genre, String year) {
+        return bookRepository.findByPublisherAndGenreAndYear(publisher, genre, year);
+    }
+
     private void adaptBookDtoToBookModel(BookDTO bookDto, Book book) {
         book.setAuthor(bookDto.getAuthor());
         book.setGenre(bookDto.getGenre());

@@ -1,9 +1,16 @@
 package com.wolox.training.repositories;
 
 import com.wolox.training.models.Book;
+import java.util.List;
 import javax.validation.ConstraintViolationException;
+import org.hamcrest.Matcher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertNotNull;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -66,6 +73,13 @@ public class BookRepositoryTest {
     public void testingSaveObjectWithNullValues(){
         Book otherBook = new Book();
         Assertions.assertThrows(ConstraintViolationException.class, ()-> bookRepository.save(otherBook));
+    }
+
+    @Test
+    public void testingFindByPublisherAndGenreAndYearMethod(){
+        bookRepository.save(oneTestBook);
+        List<Book> books = bookRepository.findByPublisherAndGenreAndYear("Viking Press", "terror", "1986");
+        assertThat(books, is(not(empty())));
     }
 
 }

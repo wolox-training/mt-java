@@ -25,12 +25,6 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
-    @GetMapping
-    public ResponseEntity<List<Book>> findAll() {
-        List<Book> books = bookService.findAll();
-        return new ResponseEntity<>(books, HttpStatus.OK);
-    }
-
     @GetMapping("/author/{bookAuthor}")
     public ResponseEntity<Book> findByAuthor(@PathVariable String bookAuthor) {
         Book book = bookService.findByAuthor(bookAuthor);

@@ -6,8 +6,7 @@ import com.wolox.training.services.BookService;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -74,12 +73,10 @@ public class BookController {
             @RequestParam(required = false) String publisher,
             @RequestParam(required = false) String genre,
             @RequestParam(required = false) String year,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "3") int size,
-            @RequestParam(defaultValue = "id") String sort) {
+            Pageable pageable) {
         return new ResponseEntity<>(
                 bookService.findByPublisherAndGenreAndYear(publisher, genre, year,
-                        PageRequest.of(page, size, Sort.by(sort))), HttpStatus.OK);
+                        pageable), HttpStatus.OK);
     }
 
     @GetMapping
@@ -93,13 +90,11 @@ public class BookController {
             @RequestParam(required = false, defaultValue = "") String subtitle,
             @RequestParam(required = false, defaultValue = "0") Integer pages,
             @RequestParam(required = false, defaultValue = "") String isbn,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "3") int size,
-            @RequestParam(defaultValue = "id") String sort) {
+            Pageable pageable) {
         return new ResponseEntity<>(
                 bookService
                         .findAllBooks(publisher, genre, year, author, image, title, subtitle, pages,
-                                isbn, PageRequest.of(page, size, Sort.by(sort))), HttpStatus.OK);
+                                isbn, pageable), HttpStatus.OK);
     }
 
 

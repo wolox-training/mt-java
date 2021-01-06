@@ -128,8 +128,8 @@ public class UserController {
     @ApiOperation(value = "Giving an infix and startBirthdate and endBirthdate retrieves a list of Users", response = User.class, responseContainer = "List")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully user retrieve")})
     public ResponseEntity<List<User>> findByNameContainingAndBirthdateBetween(
-            @RequestParam String infix, @RequestParam LocalDate startBirthdate,
-            @RequestParam LocalDate endBirthdate) {
+            @RequestParam(required = false) String infix, @RequestParam(required = false) LocalDate startBirthdate,
+            @RequestParam(required = false) LocalDate endBirthdate) {
         return new ResponseEntity<>(userService
                 .findByNameContainingAndBirthdateBetween(infix, startBirthdate, endBirthdate),
                 HttpStatus.OK);

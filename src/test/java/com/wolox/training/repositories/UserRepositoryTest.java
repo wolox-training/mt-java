@@ -60,6 +60,13 @@ public class UserRepositoryTest {
         assertThat(users, is(not(empty())));
     }
 
+    @Test
+    public void testingFindByNameContainingAndBirthdateBetweenMethodWithNullValues(){
+        userRepository.save(oneTestUser);
+        List<User> users = userRepository.findByNameIgnoreCaseContainingAndBirthdateBetween(null, null, null);
+        assertThat(users, is(not(empty())));
+    }
+
 
 
 }

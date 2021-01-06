@@ -1,18 +1,17 @@
 package com.wolox.training.repositories;
 
-import com.wolox.training.models.Book;
-import java.util.List;
-import javax.validation.ConstraintViolationException;
-import org.hamcrest.Matcher;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertNotNull;
+
+import com.wolox.training.models.Book;
+import java.util.List;
+import javax.validation.ConstraintViolationException;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -43,18 +42,18 @@ public class BookRepositoryTest {
     }
 
     @Test
-    public void whenCreateBook_thenBookIsPersisted(){
+    public void whenCreateBook_thenBookIsPersisted() {
         Book persistedBook = bookRepository.save(oneTestBook);
         assertNotNull(persistedBook);
     }
 
     @Test
-    public void testingGuavaPreconditions(){
-        Assertions.assertThrows(NullPointerException.class, ()-> oneTestBook.setAuthor(null));
+    public void testingGuavaPreconditions() {
+        Assertions.assertThrows(NullPointerException.class, () -> oneTestBook.setAuthor(null));
     }
 
     @Test
-    public void testingRepeatingUniqueValueDB(){
+    public void testingRepeatingUniqueValueDB() {
         bookRepository.save(oneTestBook);
         Book otherBook = new Book();
         otherBook.setTitle("IT");
@@ -66,19 +65,29 @@ public class BookRepositoryTest {
         otherBook.setAuthor("Stephen King");
         otherBook.setSubtitle("-");
         otherBook.setYear("1986");
-        Assertions.assertThrows(DataIntegrityViolationException.class, ()-> bookRepository.save(otherBook));
+        Assertions.assertThrows(DataIntegrityViolationException.class,
+                () -> bookRepository.save(otherBook));
     }
 
     @Test
-    public void testingSaveObjectWithNullValues(){
+    public void testingSaveObjectWithNullValues() {
         Book otherBook = new Book();
-        Assertions.assertThrows(ConstraintViolationException.class, ()-> bookRepository.save(otherBook));
+        Assertions.assertThrows(ConstraintViolationException.class,
+                () -> bookRepository.save(otherBook));
     }
 
     @Test
-    public void testingFindByPublisherAndGenreAndYearMethod(){
+    public void testingFindByPublisherAndGenreAndYearMethod() {
         bookRepository.save(oneTestBook);
-        List<Book> books = bookRepository.findByPublisherAndGenreAndYear("Viking Press", "terror", "1986");
+        List<Book> books = bookRepository
+                .findByPublisherAndGenreAndYear("Viking Press", "terror", "1986");
+        assertThat(books, is(not(empty())));
+    }
+
+    @Test
+    public void testingFindByPublisherAndGenreAndYearMethodWithNullValues() {
+        bookRepository.save(oneTestBook);
+        List<Book> books = bookRepository.findByPublisherAndGenreAndYear(null, null, null);
         assertThat(books, is(not(empty())));
     }
 

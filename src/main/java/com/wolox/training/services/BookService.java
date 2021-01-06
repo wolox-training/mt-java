@@ -24,15 +24,6 @@ public class BookService {
     private OpenLibraryService openLibraryService;
 
     /**
-     * This method returns a list of {@link Book}
-     *
-     * @return the list of {@link Book} persisted on db
-     */
-    public List<Book> findAll() {
-        return bookRepository.findAll();
-    }
-
-    /**
      * This method returns a {@link Book} wrote by a specific Author
      *
      * @param bookAuthor: name of the book's author
@@ -121,8 +112,37 @@ public class BookService {
         return bookRepository.save(book);
     }
 
+    /**
+     * This method retrieves a {@link List<Book>} with a specific:
+     *
+     * @param publisher
+     * @param genre
+     * @param year
+     * @return the {@link List<Book>}
+     */
     public List<Book> findByPublisherAndGenreAndYear(String publisher, String genre, String year) {
         return bookRepository.findByPublisherAndGenreAndYear(publisher, genre, year);
+    }
+
+    /**
+     * this method retrieves a  {@link List<Book>} with a specific:
+     *
+     * @param publisher
+     * @param genre
+     * @param year
+     * @param author
+     * @param image
+     * @param title
+     * @param subtitle
+     * @param pages
+     * @param isbn
+     * @return the {@link List<Book>}
+     */
+    public List<Book> findAllBooks(String publisher, String genre, String year,
+            String author, String image, String title, String subtitle,
+            Integer pages, String isbn) {
+        return bookRepository
+                .findAllBooks(publisher, genre, year, author, image, title, subtitle, pages, isbn);
     }
 
     private void adaptBookDtoToBookModel(BookDTO bookDto, Book book) {

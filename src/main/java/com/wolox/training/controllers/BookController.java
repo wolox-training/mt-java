@@ -25,12 +25,6 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
-    @GetMapping
-    public ResponseEntity<List<Book>> findAll() {
-        List<Book> books = bookService.findAll();
-        return new ResponseEntity<>(books, HttpStatus.OK);
-    }
-
     @GetMapping("/author/{bookAuthor}")
     public ResponseEntity<Book> findByAuthor(@PathVariable String bookAuthor) {
         Book book = bookService.findByAuthor(bookAuthor);
@@ -74,10 +68,29 @@ public class BookController {
     }
 
     @GetMapping("/bookCollection")
-    public ResponseEntity<List<Book>> findByPublisherAndGenreAndYear(@RequestParam(required = false) String publisher,
-            @RequestParam(required = false) String genre, @RequestParam(required = false) String year) {
+    public ResponseEntity<List<Book>> findByPublisherAndGenreAndYear(
+            @RequestParam(required = false) String publisher,
+            @RequestParam(required = false) String genre,
+            @RequestParam(required = false) String year) {
         return new ResponseEntity<>(
                 bookService.findByPublisherAndGenreAndYear(publisher, genre, year), HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Book>> findAll(
+            @RequestParam(required = false, defaultValue = "") String publisher,
+            @RequestParam(required = false, defaultValue = "") String genre,
+            @RequestParam(required = false, defaultValue = "") String year,
+            @RequestParam(required = false, defaultValue = "") String image,
+            @RequestParam(required = false, defaultValue = "") String author,
+            @RequestParam(required = false, defaultValue = "") String title,
+            @RequestParam(required = false, defaultValue = "") String subtitle,
+            @RequestParam(required = false, defaultValue = "0") Integer pages,
+            @RequestParam(required = false, defaultValue = "") String isbn) {
+        return new ResponseEntity<>(
+                bookService
+                        .findAllBooks(publisher, genre, year, author, image, title, subtitle, pages,
+                                isbn), HttpStatus.OK);
     }
 
 

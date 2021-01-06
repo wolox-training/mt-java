@@ -6,8 +6,9 @@ import com.wolox.training.models.Book;
 import com.wolox.training.models.User;
 import com.wolox.training.repositories.UserRepository;
 import java.time.LocalDate;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,12 +29,12 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     /**
-     * This method returns a list of {@link User}
+     * This method returns a page of {@link User}
      *
-     * @return the list of {@link User} persisted on db
+     * @return the page of {@link User} persisted on db
      */
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public Page<User> findAll(Pageable pageable) {
+        return userRepository.findAll(pageable);
     }
 
     /**
@@ -152,13 +153,13 @@ public class UserService {
      * @param infix:         sequence contained on the user's username
      * @param startBirthdate
      * @param endBirthdate
-     * @return a {@link List<User>}
+     * @return a {@link Page<User>}
      */
-    public List<User> findByNameContainingAndBirthdateBetween(String infix,
-            LocalDate startBirthdate, LocalDate endBirthdate) {
+    public Page<User> findByNameContainingAndBirthdateBetween(String infix,
+            LocalDate startBirthdate, LocalDate endBirthdate, Pageable pageable) {
         return userRepository
                 .findByNameIgnoreCaseContainingAndBirthdateBetween(infix, startBirthdate,
-                        endBirthdate);
+                        endBirthdate, pageable);
     }
 
     private void adaptUserDTOToUserModel(UserDTO userDTO, User user) {

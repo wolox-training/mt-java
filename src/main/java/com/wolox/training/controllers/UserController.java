@@ -9,8 +9,11 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import java.security.Principal;
 import java.time.LocalDate;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,9 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -45,9 +46,11 @@ public class UserController {
     @GetMapping
     @ApiOperation(value = "List all users", response = User.class)
     @ApiResponses(value = @ApiResponse(code = 200, message = "Successfully users retrieves"))
-    public ResponseEntity<List<User>> findAll() {
-        List<User> users = userService.findAll();
-        return new ResponseEntity<>(users, HttpStatus.OK);
+    public ResponseEntity<Page<User>> findAll(@RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "3") int size,
+            @RequestParam(defaultValue = "id") String sort) {
+        Page<User> usersPage = userService.findAll(PageRequest.of(page, size, Sort.by(sort)));
+        return new ResponseEntity<>(usersPage, HttpStatus.OK);
     }
 
     @GetMapping("/username")
@@ -127,11 +130,14 @@ public class UserController {
     @GetMapping("/specificUser")
     @ApiOperation(value = "Giving an infix and startBirthdate and endBirthdate retrieves a list of Users", response = User.class, responseContainer = "List")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Successfully user retrieve")})
-    public ResponseEntity<List<User>> findByNameContainingAndBirthdateBetween(
-            @RequestParam(required = false) String infix, @RequestParam(required = false) LocalDate startBirthdate,
-            @RequestParam(required = false) LocalDate endBirthdate) {
+    public ResponseEntity<Page<User>> findByNameContainingAndBirthdateBetween(
+            @RequestParam(required = false) String infix,
+            @RequestParam(required = false) LocalDate startBirthdate,
+            @RequestParam(required = false) LocalDate endBirthdate,
+            Pageable pageable) {
         return new ResponseEntity<>(userService
-                .findByNameContainingAndBirthdateBetween(infix, startBirthdate, endBirthdate),
+                .findByNameContainingAndBirthdateBetween(infix, startBirthdate, endBirthdate,
+                        pageable),
                 HttpStatus.OK);
     }
 }

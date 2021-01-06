@@ -5,9 +5,10 @@ import com.wolox.training.dtos.BookInfoDTO;
 import com.wolox.training.exceptions.ObjectNotFoundException;
 import com.wolox.training.models.Book;
 import com.wolox.training.repositories.BookRepository;
-import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -113,19 +114,20 @@ public class BookService {
     }
 
     /**
-     * This method retrieves a {@link List<Book>} with a specific:
+     * This method retrieves a {@link Page<Book>} with a specific:
      *
      * @param publisher
      * @param genre
      * @param year
-     * @return the {@link List<Book>}
+     * @return the {@link Page<Book>}
      */
-    public List<Book> findByPublisherAndGenreAndYear(String publisher, String genre, String year) {
-        return bookRepository.findByPublisherAndGenreAndYear(publisher, genre, year);
+    public Page<Book> findByPublisherAndGenreAndYear(String publisher, String genre, String year,
+            Pageable pageable) {
+        return bookRepository.findByPublisherAndGenreAndYear(publisher, genre, year, pageable);
     }
 
     /**
-     * this method retrieves a  {@link List<Book>} with a specific:
+     * this method retrieves a  {@link Page<Book>} with a specific:
      *
      * @param publisher
      * @param genre
@@ -136,13 +138,14 @@ public class BookService {
      * @param subtitle
      * @param pages
      * @param isbn
-     * @return the {@link List<Book>}
+     * @return the {@link Page<Book>}
      */
-    public List<Book> findAllBooks(String publisher, String genre, String year,
+    public Page<Book> findAllBooks(String publisher, String genre, String year,
             String author, String image, String title, String subtitle,
-            Integer pages, String isbn) {
+            Integer pages, String isbn, Pageable pageable) {
         return bookRepository
-                .findAllBooks(publisher, genre, year, author, image, title, subtitle, pages, isbn);
+                .findAllBooks(publisher, genre, year, author, image, title, subtitle, pages, isbn,
+                        pageable);
     }
 
     private void adaptBookDtoToBookModel(BookDTO bookDto, Book book) {

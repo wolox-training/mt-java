@@ -4,6 +4,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import com.wolox.training.models.Book;
@@ -16,6 +17,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @DataJpaTest
@@ -79,16 +82,16 @@ public class BookRepositoryTest {
     @Test
     public void testingFindByPublisherAndGenreAndYearMethod() {
         bookRepository.save(oneTestBook);
-        List<Book> books = bookRepository
-                .findByPublisherAndGenreAndYear("Viking Press", "terror", "1986");
-        assertThat(books, is(not(empty())));
+        Page<Book> books = bookRepository
+                .findByPublisherAndGenreAndYear("Viking Press", "terror", "1986", PageRequest.of(1,3));
+        assertEquals(books.getTotalElements(), 1);
     }
 
     @Test
     public void testingFindByPublisherAndGenreAndYearMethodWithNullValues() {
         bookRepository.save(oneTestBook);
-        List<Book> books = bookRepository.findByPublisherAndGenreAndYear(null, null, null);
-        assertThat(books, is(not(empty())));
+        Page<Book> books = bookRepository.findByPublisherAndGenreAndYear(null, null, null, PageRequest.of(1,3));
+        assertEquals(books.getTotalElements(), 1);
     }
 
 }
